@@ -1,69 +1,40 @@
 # cobalt-tool-watch-mark
 
-`cobalt-tool-watch-mark` is a Python project for CLI tools. It turns package a Python local lab for watch analysis with windowed input fixtures, late-data behavior checks, and documented operating limits into a small local model with readable fixtures and a direct verification command.
+`cobalt-tool-watch-mark` is a compact Python repository for cli tools, centered on this goal: Package a Python local lab for watch analysis with windowed input fixtures, late-data behavior checks, and documented operating limits.
 
-## Reading Cobalt Tool Watch Mark
+## Problem It Tries To Make Smaller
 
-Start with the README, then open `metadata/project.json` to check the constants behind the examples. After that, `fixtures/cases.csv` shows the compact path and `examples/extended_cases.csv` gives a wider look at the same rule.
+The project exists to keep a narrow engineering decision visible and testable. For this repo, that decision is how file span and argument risk should influence a review result.
 
-## Purpose
+## Cobalt Tool Watch Mark Review Notes
 
-This is not a wrapper around a service. It is a self-contained project that shows how the model behaves when demand, capacity, latency, risk, and weight move in different directions.
+`stale` and `baseline` are the cases worth reading first. They show the optimistic and cautious ends of the fixture.
 
-## Design Sketch
+## Working Pieces
 
-The interesting part is the boundary between accepted and reviewed scenarios. Extended examples sit near that boundary so future edits can show whether the model became more permissive or more cautious. The Python code favors standard library tools and direct tests over framework weight.
+- `fixtures/domain_review.csv` adds cases for file span and terminal width.
+- `metadata/domain-review.json` records the same cases in structured form.
+- `config/review-profile.json` captures the read order and the two review questions.
+- `examples/cobalt-tool-watch-walkthrough.md` walks through the case spread.
+- The Python code includes a review path for `file span` and `file span`.
+- `docs/field-notes.md` explains the strongest and weakest cases.
 
-## Fixture Notes
+## Design Notes
 
-The examples are meant to be readable before they are exhaustive. They cover enough variation to show how latency and risk can pull a decision below the threshold.
+The repository has two validation layers: the original compact policy fixture and the domain review fixture. They are separate so one can change without hiding failures in the other.
 
-## What It Does
+The Python addition stays small enough to inspect in one sitting.
 
-- Uses fixture data to keep argument shape changes visible in code review.
-- Includes extended examples for file input, including `surge` and `degraded`.
-- Documents repeatable reports tradeoffs in `docs/operations.md`.
-- Runs locally with a single verification command and no external credentials.
-- Stores project constants and verification metadata in `metadata/project.json`.
-
-## Setup
-
-Clone the repository, enter the directory, and run the verifier. No database server, cloud account, or token is required.
-
-## Verification
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/audit.ps1
-```
-
-The audit command checks repository structure and README constraints before it delegates to the verifier.
-
-## Files Worth Reading
-
-- `src`: primary implementation
-- `tests`: verification harness
-- `fixtures`: compact golden scenarios
-- `examples`: expanded scenario set
-- `metadata`: project constants and verification metadata
-- `docs`: operations and extension notes
-- `scripts`: local verification and audit commands
-- `pyproject.toml`: Python project metadata
-
-## Limits
-
-The repository favors determinism over breadth. It does not pull live data, keep secrets, or depend on network access for verification.
-
-## Next Directions
-
-- Add a comparison mode that shows how decisions change when one signal is adjusted.
-- Add a loader for `examples/extended_cases.csv` and promote selected cases into the language test suite.
-- Add a short report command that prints the score breakdown for a single scenario.
-- Add one more cli tools fixture that focuses on a malformed or borderline input.
-
-## Usage
+## Example Run
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify.ps1
 ```
 
-This runs the language-level build or test path against the compact fixture set.
+## Tests
+
+The verifier is intentionally local. It should fail if the fixture score math, lane assignment, or language-specific test drifts.
+
+## Known Limits
+
+This remains a local project with deterministic fixtures. It does not depend on credentials, hosted services, or live data. Future work should add richer malformed inputs before widening the public API.
