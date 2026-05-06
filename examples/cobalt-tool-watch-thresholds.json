@@ -1,0 +1,17 @@
+{
+  "repo": "cobalt-tool-watch-mark",
+  "thresholds": {
+    "signal": 4,
+    "slack": 1,
+    "confidence": 2,
+    "drag": 2,
+    "ship": 201,
+    "watch": 121
+  },
+  "terms": [
+    "file span",
+    "terminal width",
+    "argument risk",
+    "report density"
+  ]
+}
